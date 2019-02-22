@@ -7,13 +7,20 @@ const { Book } = require('../models/Book');
 /* beautify preserve:end */
 
 const books = [{
-	_id: new ObjectID(),
-	title: 'Test book',
-	author: 'Michael Wolfe'
-}, {
-	_id: new ObjectID(),
-	title: 'Test book 2'
-}];
+		_id: new ObjectID(),
+		title: 'Test book',
+		author: 'Michael Wolfe'
+	}, {
+		_id: new ObjectID(),
+		title: 'Test book 2'
+	},
+	{
+		_id: new ObjectID(),
+		title: 'completed book',
+		author: 'anon',
+		completed: true
+	}
+];
 
 
 

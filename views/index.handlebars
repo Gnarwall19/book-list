@@ -1,0 +1,42 @@
+<div id="wrapper">
+  <div id="user-input">
+    <form id="add-book">
+      <input name="book" id="book"></input>
+      <input type="submit" value="Read This!"></input>
+    </form>
+  </div>
+
+  <div id="content">
+    <div id="to-read">
+      <ul>
+        {{#each books}}
+        {{#unless completed}}
+        <li>
+          <p id="listed-book" data="{{this.completed}}">
+            <button data-id="{{this.id}}" data="{{this.completed}}" class="delete-book">X</button>
+            {{this.title}}
+            {{this.completed}}
+            <button data-id="{{this.id}}" data-completed="{{this.completed}}" class="finished-book">Finished</button>
+          </p>
+        </li>
+        {{/unless}}
+        {{/each}}
+      </ul>
+    </div>
+    <div id="completed">
+      <ul>
+        {{#each books}}
+        {{#if this.completed}}
+        <li>
+          <p>
+            <button data-id="{{this.id}}" class="delete-book">X</button>
+            {{this.title}}
+            <button data-id="{{this.id}}" class="finished-book">Finished</button>
+          </p>
+        </li>
+        {{/if}}
+        {{/each}}
+      </ul>
+    </div>
+  </div>
+</div>

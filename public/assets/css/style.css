@@ -1,0 +1,11 @@
+#content {
+  display: flex;
+}
+
+#to-read {
+  border: 2px solid green;
+}
+
+#completed {
+  border: 2px solid red;
+}
