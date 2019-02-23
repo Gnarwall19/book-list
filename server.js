@@ -37,7 +37,6 @@ app.set("view engine", "handlebars");
 
 // FRONT END RENDER
 app.get('/', (req, res) => {
-	console.log(req.params);
 	Book.find().then((books) => {
 
 		res.render('index', {
@@ -47,7 +46,6 @@ app.get('/', (req, res) => {
 });
 
 app.post('/books', (req, res) => {
-	console.log(req.params);
 	var book = new Book({
 		title: req.body.title,
 		author: req.body.author
@@ -62,19 +60,16 @@ app.post('/books', (req, res) => {
 });
 
 app.get('/books', (req, res) => {
-	console.log(req.params);
 	Book.find().then((books) => {
 		res.send({
 			books
 		});
-		//console.log(books);
 	}, (e) => {
 		res.status(400).send(e);
 	});
 });
 
 app.get('/books/:id', (req, res) => {
-	console.log(req.params);
 	var id = req.params.id;
 	if (!ObjectID.isValid(id)) {
 		return res.status(404).send();
@@ -93,24 +88,24 @@ app.get('/books/:id', (req, res) => {
 });
 
 // DELETE
-app.delete('/books/:id', (req, res) => {
-	console.log(req.params);
+app.delete('/books/:id', function (req, res) {
 	var id = req.params.id;
 
 	if (!ObjectID.isValid(id)) {
 		return res.status(404).send();
 	}
 
-	Book.findOneAndDelete(id).then((book) => {
+	Book.findByIdAndRemove(id).then((book) => {
 		if (!book) {
 			return res.status(404).send();
 		}
-
 		res.send({
 			book
 		});
+		console.log(book);
 	}).catch((e) => {
 		res.status(400).send();
+		console.log(e);
 	});
 });
 
@@ -127,7 +122,6 @@ app.put('/books/:id', function (req, res) {
 			console.log(err);
 		}
 		res.send('updated successfully');
-		console.log(data);
 	});
 });
 

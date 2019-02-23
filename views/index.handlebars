@@ -12,11 +12,11 @@
         {{#each books}}
         {{#unless completed}}
         <li>
-          <p class="listed-book">
+          <p class="listed-book" data-val="{{this}}">
             <button data-id="{{this.id}}" class="delete-book">X</button>
             {{this.title}}
             {{this.completed}}
-            <button data-id="{{this.id}}" class="finished-book" data-val="{{this}}">Finished</button>
+            <button data-id="{{this.id}}" class="finished-book">Finished</button>
           </p>
         </li>
         {{/unless}}
@@ -28,10 +28,11 @@
         {{#each books}}
         {{#if this.completed}}
         <li>
-          <p>
-            <button data-id="{{this.id}}" class="delete-book">X</button>
+          <p class="read-book" data-val="{{this}}">
+            <button data-id="{{this.id}}" class=" delete-book">X</button>
             {{this.title}}
-            <button data-id="{{this.id}}" class="finished-book">Finished</button>
+            {{this.completed}}
+
           </p>
         </li>
         {{/if}}

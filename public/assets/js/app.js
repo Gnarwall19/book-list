@@ -8,7 +8,7 @@ $(function () {
       type: 'DELETE'
     }).then(
       function () {
-        console.log('deleted id ', id);
+        console.log('deleted id', id);
         // Reload the page for updated list
         location.reload();
       }
@@ -36,9 +36,6 @@ $(function () {
       console.log("Oops not working");
     });
   });
-
-
-
 
   $('#add-book').on('submit', function (event) {
     // preventDefault for submit events
