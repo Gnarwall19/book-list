@@ -1,7 +1,5 @@
 $(function () {
 
-  //console.log($('#listed-book').attr('data'));
-
   $('.delete-book').on('click', function (event) {
     var id = $(this).data('id');
 
@@ -19,29 +17,33 @@ $(function () {
 
 
 
-  // NOT WORKING
+  //WORKING
   // Set finished books to completed
   $('.finished-book').on('click', function (event) {
+
     var id = $(this).data('id');
 
-    // Send PUT request
-    $.ajax('/books/' + id, {
-      type: 'PATCH',
-      data: bookData
-    }).then(
-      function () {
-        console.log('updated id ', id, this.completed); //completed = undefined
-        // Reload the page for updated list
-        location.reload();
+    $.ajax({
+      type: 'put',
+      url: '/books/' + id,
+      data: {
+        completed: true
       }
-    );
+    }).done(function (response) {
+      console.log(response);
+      location.reload();
+    }).fail(function (response) {
+      console.log("Oops not working");
+    });
   });
+
 
 
 
   $('#add-book').on('submit', function (event) {
     // preventDefault for submit events
     event.preventDefault();
+
 
     var book = {
       title: $('#book').val().trim()
@@ -51,6 +53,7 @@ $(function () {
     // Send POST request
     $.ajax('/books', {
       type: 'POST',
+      dataType: 'json',
       data: book
     }).then(
       function () {
