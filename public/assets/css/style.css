@@ -1,3 +1,8 @@
+body {
+  font-family: 'Open Sans',
+    sans-serif;
+}
+
 #wrapper {
   display: flex;
   justify-content: center;
@@ -5,10 +10,79 @@
   margin: 50px;
 }
 
+
+#navbar {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+.nav-item {
+  float: left;
+  border-right: 1px solid #bbb;
+}
+
+.nav-item:last-child {
+  border-right: none;
+}
+
+.nav-item a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+nav-item a:hover:not(.active) {
+  background-color: #111;
+}
+
+.active {
+  background-color: #4CAF50;
+}
+
+#heading {
+  text-align: center;
+  font-size: 32px;
+  margin: 10px;
+}
+
+.list-heading {
+  text-align: center;
+  font-size: 18px
+}
+
+#book {
+  width: 25em;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+#add-book {
+  display: flex;
+}
+
+input[type=submit] {
+  width: 10em;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
 #user-input {
   display: flex;
   justify-content: center;
-  margin-bottom: 1em;
 }
 
 #content {
@@ -17,12 +91,49 @@
   justify-content: center;
 }
 
+.db-items {
+  margin: 25px;
+  width: 25%;
+  height: 20em;
+  overflow-y: scroll;
+}
+
+.book {
+  font-family: 'Open Sans',
+    sans-serif;
+  margin: 10px;
+}
+
+.finished-book {
+  float: right;
+}
+
 #to-read {
   border: 2px solid green;
-  display: flex;
+  border-radius: 5px;
 }
 
 #completed {
   border: 2px solid red;
-  display: flex;
+  border-radius: 5px;
+}
+
+@media screen and (max-width: 500px) {
+  #wrapper {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin: 50px;
+  }
+
+  #user-input {
+    display: flex;
+    justify-content: center;
+  }
+
+  .db-items {
+    margin: 25px;
+    width: 100%;
+    overflow-y: scroll;
+  }
 }

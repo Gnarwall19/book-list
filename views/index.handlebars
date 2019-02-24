@@ -1,4 +1,13 @@
+<nav>
+  <ul id="navbar">
+    <li class="nav-item"><a class="active" href="#home">Book List</a></li>
+    <li class="nav-item" style="float:right"><a href="#sign-up">Sign Up</a></li>
+    <li class="nav-item" style="float:right"><a href="#sign-in">Sign In</a></li>
+  </ul>
+</nav>
 <div id="wrapper">
+
+  <h1 id="heading">My Reading List</h1>
   <div id="user-input">
     <form id="add-book">
       <input name="book" id="book"></input>
@@ -7,15 +16,14 @@
   </div>
 
   <div id="content">
-    <div id="to-read">
+    <div id="to-read" class="db-items">
       <ul>
         {{#each books}}
         {{#unless completed}}
         <li>
-          <p class="listed-book" data-val="{{this}}">
+          <p class="book listed-book" data-val="{{this}}">
             <button data-id="{{this.id}}" class="delete-book">X</button>
             {{this.title}}
-            {{this.completed}}
             <button data-id="{{this.id}}" class="finished-book">Finished</button>
           </p>
         </li>
@@ -23,16 +31,14 @@
         {{/each}}
       </ul>
     </div>
-    <div id="completed">
+    <div id="completed" class="db-items">
       <ul>
         {{#each books}}
         {{#if this.completed}}
         <li>
-          <p class="read-book" data-val="{{this}}">
+          <p class="book read-book" data-val="{{this}}">
             <button data-id="{{this.id}}" class=" delete-book">X</button>
             {{this.title}}
-            {{this.completed}}
-
           </p>
         </li>
         {{/if}}
