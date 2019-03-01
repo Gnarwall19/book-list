@@ -9,12 +9,12 @@ var { ObjectID } = require('mongodb');
 /* beautify preserve:end */
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/BookList', {
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/BookList', {
 	useNewUrlParser: true
 });
 
 const app = express();
-const PORT = process.env.MONGODB_URI || 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
