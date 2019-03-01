@@ -14,7 +14,7 @@ mongoose.connect('mongodb://localhost:27017/BookList', {
 });
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.MONGODB_URI || 3000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
