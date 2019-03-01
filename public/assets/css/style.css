@@ -1,13 +1,16 @@
 body {
   font-family: 'Open Sans',
     sans-serif;
+  background: #add8e6;
 }
 
 #wrapper {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  margin: 50px;
+  /* margin: 50px; */
+  margin-top: 50px;
+  background: #add8e6;
 }
 
 
@@ -65,6 +68,31 @@ nav-item a:hover:not(.active) {
   box-sizing: border-box;
 }
 
+
+.author {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -60px;
+
+  /* Fade in tooltip - takes 1 second to go from 0% to 100% opac: */
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.book:hover .author {
+  visibility: visible;
+  opacity: 1;
+}
+
 #add-book {
   display: flex;
 }
@@ -93,7 +121,7 @@ input[type=submit] {
 
 .db-items {
   margin: 25px;
-  width: 25%;
+  width: 30%;
   height: 20em;
   overflow-y: scroll;
 }
@@ -102,23 +130,56 @@ input[type=submit] {
   font-family: 'Open Sans',
     sans-serif;
   margin: 10px;
+  padding-bottom: 5px;
+  border-bottom: solid 2px #add8e6;
 }
 
 .finished-book {
   float: right;
+  border: none;
+  font-size: 16px;
+  color: #4CAF50;
+}
+
+.delete-book {
+  border: none;
 }
 
 #to-read {
   border: 2px solid green;
   border-radius: 5px;
+  background: white;
 }
 
 #completed {
   border: 2px solid red;
   border-radius: 5px;
+  background: white;
 }
 
-@media screen and (max-width: 500px) {
+footer {
+  width: 100%;
+  height: 24px;
+  padding-top: 20px;
+  background-color: #333;
+  color: white;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+
+footer ul {
+  list-style-type: none;
+  text-align: center;
+}
+
+footer li {
+  display: inline;
+  text-align: center;
+  margin-right: 45px;
+}
+
+@media screen and (max-width: 1030px) {
   #wrapper {
     display: flex;
     justify-content: center;
@@ -131,9 +192,16 @@ input[type=submit] {
     justify-content: center;
   }
 
+  #content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
   .db-items {
     margin: 25px;
-    width: 100%;
+    width: 80%;
     overflow-y: scroll;
   }
 }

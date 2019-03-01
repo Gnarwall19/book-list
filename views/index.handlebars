@@ -17,14 +17,15 @@
 
   <div id="content">
     <div id="to-read" class="db-items">
-      <ul>
+      <ul id="read-list">
         {{#each books}}
         {{#unless completed}}
         <li>
-          <p class="book listed-book" data-val="{{this}}">
-            <button data-id="{{this.id}}" class="delete-book">X</button>
+          <p class="book listed-book" data-val="{{this}}" title="{{this.author}}">
+            <button data-id="{{this.id}}" class="delete-book">&#10060;</button>
             {{this.title}}
-            <button data-id="{{this.id}}" class="finished-book">Finished</button>
+            <span class="author">By: {{this.author}}</span>
+            <button data-id="{{this.id}}" class="finished-book">&#10003;</button>
           </p>
         </li>
         {{/unless}}
@@ -32,13 +33,14 @@
       </ul>
     </div>
     <div id="completed" class="db-items">
-      <ul>
+      <ul id="finished-list">
         {{#each books}}
         {{#if this.completed}}
         <li>
-          <p class="book read-book" data-val="{{this}}">
-            <button data-id="{{this.id}}" class=" delete-book">X</button>
+          <p class="book read-book" data-val="{{this}}" title="{{this.author}}">
+            <button data-id="{{this.id}}" class=" delete-book">&#10060;</button>
             {{this.title}}
+            <span class="author">{{this.author}}</span>
           </p>
         </li>
         {{/if}}
@@ -47,3 +49,10 @@
     </div>
   </div>
 </div>
+<footer>
+  <ul>
+    <li>github</li>
+    <li>linkedIn</li>
+    <li>profile</li>
+  </ul>
+</footer>
