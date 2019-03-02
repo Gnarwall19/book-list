@@ -34,9 +34,7 @@ app.use(express.static("public"));
 app.get('/', (req, res) => {
 	Book.find().then((books) => {
 
-		res.sendFile(path.join(__dirname, "/views/index.handlebars"));
-
-		res.render('index', {
+		res.render('index.handlebars', {
 			books: books
 		});
 	});
