@@ -23,7 +23,9 @@
     "express-handlebars": "^3.0.0",
     "faker": "^4.1.0",
     "lodash": "^4.17.11",
-    "mongoose": "^5.4.9"
+    "mongoose": "^5.4.9",
+    "path": "^0.12.7",
+    "request": "^2.88.0"
   },
   "devDependencies": {
     "expect": "^24.1.0",

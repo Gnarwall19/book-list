@@ -1,7 +1,8 @@
-const _ = require('lodash');
+const request = require('request');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const path = require('path');
 /* beautify preserve:start */
 var { Book } = require('./models/Book');
 var { ObjectID } = require('mongodb');
@@ -27,14 +28,15 @@ app.engine("handlebars", exphbs({
 	defaultLayout: "main"
 }));
 app.set("view engine", "handlebars");
+app.set("views", __dirname + "/views/");
 
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "public")));
 
 // FRONT END RENDER
 app.get('/', (req, res) => {
 	Book.find().then((books) => {
 
-		res.render('index.handlebars', {
+		res.render('index', {
 			books: books
 		});
 	});
