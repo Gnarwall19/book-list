@@ -9,7 +9,7 @@ var { ObjectID } = require('mongodb');
 /* beautify preserve:end */
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://heroku_k4xmv49j:zeroisgoodboi69@ds157735.mlab.com:57735/heroku_k4xmv49j', {
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/BookList', {
 	useNewUrlParser: true
 });
 
@@ -39,7 +39,7 @@ app.set("view engine", "handlebars");
 app.get('/', (req, res) => {
 	Book.find().then((books) => {
 
-		res.render('index', {
+		res.render('views/index', {
 			books: books
 		});
 	});
