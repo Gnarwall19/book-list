@@ -9,7 +9,7 @@ var { ObjectID } = require('mongodb');
 /* beautify preserve:end */
 
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/BookList', {
+mongoose.connect('mongodb://heroku_k4xmv49j:zeroisgoodboi69@ds157735.mlab.com:57735/heroku_k4xmv49j', {
 	useNewUrlParser: true
 });
 
