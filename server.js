@@ -20,26 +20,21 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
 	extended: false
 }));
-
-app.use(express.static("public"));
-
-
-// app.use(bodyParser.json({
-// 	type: 'application/*+json'
-// }));
+app.use(bodyParser.text());
 
 var exphbs = require("express-handlebars");
-
 app.engine("handlebars", exphbs({
 	defaultLayout: "main"
 }));
 app.set("view engine", "handlebars");
 
+app.use(express.static("public"));
+
 // FRONT END RENDER
 app.get('/', (req, res) => {
 	Book.find().then((books) => {
 
-		res.render('views/index', {
+		res.render('index', {
 			books: books
 		});
 	});
