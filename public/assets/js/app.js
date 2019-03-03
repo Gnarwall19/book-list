@@ -22,12 +22,14 @@ $(function () {
   $('.finished-book').on('click', function (event) {
 
     var id = $(this).data('id');
+    var date = new Date().toLocaleDateString('en-US');
 
     $.ajax({
       type: 'put',
       url: '/books/' + id,
       data: {
-        completed: true
+        completed: true,
+        completedAt: date
       }
     }).done(function (response) {
       console.log(response);

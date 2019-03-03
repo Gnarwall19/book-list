@@ -179,6 +179,19 @@ footer li {
   margin-right: 45px;
 }
 
+.footer-link {
+  text-decoration: none;
+}
+
+.footer-link:hover {
+  text-decoration: underline;
+}
+
+.footer-link:visited {
+  text-decoration: none;
+  color: white
+}
+
 @media screen and (max-width: 1030px) {
   #wrapper {
     display: flex;

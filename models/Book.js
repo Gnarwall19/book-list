@@ -22,7 +22,7 @@ var Book = mongoose.model('Book', {
         default: false
     },
     completedAt: {
-        type: Number,
+        type: String,
         default: null
     }
 });
