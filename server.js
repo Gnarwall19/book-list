@@ -1,5 +1,6 @@
 const request = require('request');
 const express = require('express');
+var router = express.Router();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require('path');
@@ -23,17 +24,19 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.text());
 
+app.use("/", router);
+
 var exphbs = require("express-handlebars");
+app.set("view engine", "handlebars");
 app.engine("handlebars", exphbs({
 	defaultLayout: "main"
 }));
-app.set("view engine", "handlebars");
-app.set("views", __dirname + "/views/");
+//app.set("views", __dirname + "/public/views/");
 
 app.use(express.static(path.join(__dirname, "public")));
 
 // FRONT END RENDER
-app.get('/', (req, res) => {
+router.get('/', (req, res) => {
 	Book.find().then((books) => {
 
 		res.render('index', {
@@ -42,7 +45,7 @@ app.get('/', (req, res) => {
 	});
 });
 
-app.post('/books', (req, res) => {
+router.post('/books', (req, res) => {
 	var book = new Book({
 		title: req.body.title,
 		author: req.body.author
@@ -56,7 +59,7 @@ app.post('/books', (req, res) => {
 	});
 });
 
-app.get('/books', (req, res) => {
+router.get('/books', (req, res) => {
 	Book.find().then((books) => {
 		res.send({
 			books
@@ -66,7 +69,7 @@ app.get('/books', (req, res) => {
 	});
 });
 
-app.get('/books/:id', (req, res) => {
+router.get('/books/:id', (req, res) => {
 	var id = req.params.id;
 	if (!ObjectID.isValid(id)) {
 		return res.status(404).send();
@@ -85,7 +88,7 @@ app.get('/books/:id', (req, res) => {
 });
 
 // DELETE
-app.delete('/books/:id', function (req, res) {
+router.delete('/books/:id', function (req, res) {
 	var id = req.params.id;
 
 	if (!ObjectID.isValid(id)) {
@@ -107,7 +110,7 @@ app.delete('/books/:id', function (req, res) {
 });
 
 
-app.put('/books/:id', function (req, res) {
+router.put('/books/:id', function (req, res) {
 	const data = req.body;
 	console.log(data);
 	Book.updateOne({
