@@ -1,6 +1,4 @@
-const request = require('request');
 const express = require('express');
-var router = express.Router();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require('path');
@@ -18,114 +16,20 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/BookList'
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+const router = require('./controllers/api-routes');
+const exphbs = require("express-handlebars");
+app.set("view engine", "handlebars");
+app.engine("handlebars", exphbs({
+	defaultLayout: "main"
+}));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
 	extended: false
 }));
 app.use(bodyParser.text());
-
 app.use("/", router);
-
-var exphbs = require("express-handlebars");
-app.set("view engine", "handlebars");
-app.engine("handlebars", exphbs({
-	defaultLayout: "main"
-}));
-//app.set("views", __dirname + "/public/views/");
-
 app.use(express.static(path.join(__dirname, "public")));
-
-// FRONT END RENDER
-router.get('/', (req, res) => {
-	Book.find().then((books) => {
-
-		res.render('index', {
-			books: books
-		});
-	});
-});
-
-router.post('/books', (req, res) => {
-	var book = new Book({
-		title: req.body.title,
-		author: req.body.author
-	});
-
-	book.save().then((doc) => {
-		res.send(doc);
-	}, (e) => {
-		res.status(400).send(e);
-		console.log(e);
-	});
-});
-
-router.get('/books', (req, res) => {
-	Book.find().then((books) => {
-		res.send({
-			books
-		});
-	}, (e) => {
-		res.status(400).send(e);
-	});
-});
-
-router.get('/books/:id', (req, res) => {
-	var id = req.params.id;
-	if (!ObjectID.isValid(id)) {
-		return res.status(404).send();
-	};
-
-	Book.findById(id).then((book) => {
-		if (!book) {
-			return res.status(404).send();
-		}
-		res.send({
-			book
-		});
-	}, (e) => {
-		res.status(400).send(e);
-	});
-});
-
-// DELETE
-router.delete('/books/:id', function (req, res) {
-	var id = req.params.id;
-
-	if (!ObjectID.isValid(id)) {
-		return res.status(404).send();
-	}
-
-	Book.findByIdAndRemove(id).then((book) => {
-		if (!book) {
-			return res.status(404).send();
-		}
-		res.send({
-			book
-		});
-		console.log(book);
-	}).catch((e) => {
-		res.status(400).send();
-		console.log(e);
-	});
-});
-
-
-router.put('/books/:id', function (req, res) {
-	const data = req.body;
-	console.log(data);
-	Book.updateOne({
-		_id: req.params.id
-	}, {
-		$set: data
-	}, function (err, result) {
-		if (err) {
-			console.log(err);
-		}
-		res.send('updated successfully');
-	});
-});
-
-
 
 app.listen(PORT, () => console.log(`Server running on port: ${PORT}.`));
 
