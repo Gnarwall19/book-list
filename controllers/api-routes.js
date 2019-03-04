@@ -62,6 +62,11 @@ router.post('/books', (req, res) => {
   });
 });
 
+// POST user
+// router.post('/users', (req, res) => {
+
+// })
+
 // UPDATE list! Sets Completed to true and marks time CompletedAt
 router.put('/books/:id', function (req, res) {
   const data = req.body;

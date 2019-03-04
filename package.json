@@ -25,7 +25,8 @@
     "lodash": "^4.17.11",
     "mongoose": "^5.4.9",
     "path": "^0.12.7",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "validator": "^10.11.0"
   },
   "devDependencies": {
     "expect": "^24.1.0",

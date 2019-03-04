@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const validator = require('validator');
 
 let User = mongoose.model('User', {
     email: {
@@ -8,7 +9,7 @@ let User = mongoose.model('User', {
         minlength: 1,
         unique: true,
         validate: {
-            validator: validator.isEmail,
+            validator: (validator.isEmail),
             message: '{VALUE} is not a valid email address'
         }
     },

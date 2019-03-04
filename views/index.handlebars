@@ -2,10 +2,26 @@
   <ul id="navbar">
     <li class="nav-item"><a class="active" href="#home">Book List</a></li>
     <li class="nav-item" style="float:right"><a href="#sign-up">Sign Up</a></li>
-    <li class="nav-item" style="float:right"><a href="#sign-in">Sign In</a></li>
+    <li id="sign-in-btn" class="nav-item" style="float:right"><a href="#sign-in" id="sign-in-btn">Sign In</a></li>
   </ul>
 </nav>
 <div id="wrapper">
+
+  <div id="sign-in" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h1>Log in</h1>
+      <br>
+      <form>
+        <input type="text" name="user" placeholder="Username">
+        <input type="password" name="pass" placeholder="Password">
+        <input type="submit" name="login" class="login login-submit" value="Log in">
+      </form>
+    </div>
+
+  </div>
 
   <h1 id="heading">My Reading List</h1>
   <div id="user-input">
@@ -56,3 +72,26 @@
     <li><a class="footer-link" href="https://gnarwall19.github.io/michael-wolfe-portfolio/">Portfolio</a></li>
   </ul>
 </footer>
+
+<script>
+  $(function () {
+
+    // When the user clicks on the button, open the modal 
+    $("#sign-in-btn").on('click', function (event) {
+      $('.modal').css('display', 'block');
+      console.log('click');
+    });
+
+
+    $('.close').on('click', function () {
+      $('.modal').css('display', 'none');
+    });
+
+    // Not working
+    window.onclick = function (event) {
+      if (event.target === $('.modal')) {
+        $('.modal').css('display', 'none');
+      }
+    }
+  });
+</script>
