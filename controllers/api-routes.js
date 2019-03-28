@@ -3,7 +3,9 @@ const router = express.Router();
 /* beautify preserve:start */
 var { Book } = require('../models/Book');
 var { ObjectID } = require('mongodb');
-//const { User } = require('../models/User');
+var { User } = require('../models/User');
+var { authenticate } = require('../middleware/authenticate');
+var _ = require('lodash');
 /* beautify preserve:end */
 
 
@@ -18,8 +20,10 @@ router.get('/', (req, res) => {
 });
 
 // GET list of all DB items in JSON form
-router.get('/books', (req, res) => {
-  Book.find().then((books) => {
+router.get('/books', authenticate, (req, res) => {
+  Book.find({
+    _creator: req.user._id
+  }).then((books) => {
     res.send({
       books
     });
@@ -29,13 +33,16 @@ router.get('/books', (req, res) => {
 });
 
 // GET single book as JSON object by id
-router.get('/books/:id', (req, res) => {
+router.get('/books/:id', authenticate, (req, res) => {
   var id = req.params.id;
   if (!ObjectID.isValid(id)) {
     return res.status(404).send();
   };
 
-  Book.findById(id).then((book) => {
+  Book.findOne({
+    _id: id,
+    _creator: req.user._id
+  }).then((book) => {
     if (!book) {
       return res.status(404).send();
     }
@@ -48,14 +55,16 @@ router.get('/books/:id', (req, res) => {
 });
 
 // Add a new book
-router.post('/books', (req, res) => {
+router.post('/books', authenticate, (req, res) => {
   let book = new Book({
     title: req.body.title,
-    author: req.body.author
+    author: req.body.author,
+    _creator: req.user._id
   });
 
   book.save().then((doc) => {
     res.send(doc);
+    console.log(req.user._id);
   }, (e) => {
     res.status(400).send(e);
     throw e;
@@ -63,22 +72,77 @@ router.post('/books', (req, res) => {
 });
 
 // POST user
-// router.post('/users', (req, res) => {
+router.post('/users', (req, res) => {
+  let user = new User({
+    email: req.body.email,
+    password: req.body.password
+  });
 
-// })
+  user.save().then(() => {
+    return user.generateAuthToken();
+  }).then((token) => {
+    res.header('x-auth', token).send(user);
+  }).catch((e) => {
+    res.status(400).send(e);
+  })
+
+  console.log(user);
+});
+
+// Authenticate users
+router.get('/users/me', authenticate, (req, res) => {
+  res.send(req.user);
+});
+
+router.post('/users/login', (req, res) => {
+  let user = new User({
+    email: req.body.email,
+    password: req.body.password
+  });
+  console.log(user);;
+  // let body = _.pick(req.body, ['email', 'password']);
+
+  User.findByCredentials(user.email, user.password).then((user) => {
+    return user.generateAuthToken().then((token) => {
+      res.header('x-auth', token).send(user);
+    });
+  }).catch((e) => {
+    res.status(400).send();
+  });
+});
 
 // UPDATE list! Sets Completed to true and marks time CompletedAt
-router.put('/books/:id', function (req, res) {
+router.put('/books/:id', authenticate, function (req, res) {
   const data = req.body;
 
-  Book.updateOne({
-    _id: req.params.id
+  Book.findOneAndUpdate({
+    _id: req.params.id,
+    _creator: req.user._id
   }, {
     $set: data
   }, function (err, result) {
     if (err) throw err;
     res.send('updated successfully');
   });
+
+  // Book.updateOne({
+  //   _id: req.params.id
+  // }, {
+  //   $set: data
+  // }, function (err, result) {
+  //   if (err) throw err;
+  //   res.send('updated successfully');
+  // });
+});
+
+// Logout user
+router.delete('/users/me/token', authenticate, (req, res) => {
+  req.user.removeToken(req.token).then(() => {
+    console.log(req.token);
+    res.status(200).send();
+  }, () => {
+    res.status(400).send();
+  })
 });
 
 // DELETE book from DB
@@ -89,7 +153,10 @@ router.delete('/books/:id', function (req, res) {
     return res.status(404).send();
   }
 
-  Book.findByIdAndRemove(id).then((book) => {
+  Book.findOneAndRemove({
+    _id: id,
+    _creator: req.user._id
+  }).then((book) => {
     if (!book) {
       return res.status(404).send();
     }

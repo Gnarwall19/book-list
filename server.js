@@ -5,7 +5,7 @@ const path = require('path');
 /* beautify preserve:start */
 var { Book } = require('./models/Book');
 var { ObjectID } = require('mongodb');
-//const { User } = require('./models/User');
+const { User } = require('./models/User');
 /* beautify preserve:end */
 
 mongoose.Promise = global.Promise;

@@ -24,6 +24,10 @@ var Book = mongoose.model('Book', {
     completedAt: {
         type: String,
         default: null
+    },
+    _creator: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
     }
 });
 

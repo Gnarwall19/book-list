@@ -1,28 +1,58 @@
 <nav>
   <ul id="navbar">
     <li class="nav-item"><a class="active" href="#home">Book List</a></li>
-    <li class="nav-item" style="float:right"><a href="#sign-up">Sign Up</a></li>
-    <li id="sign-in-btn" class="nav-item" style="float:right"><a href="#sign-in" id="sign-in-btn">Sign In</a></li>
+    <li class="nav-item" style="float:right">
+      <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle get-started-btn mt-1 mb-1">Sign Up</a>
+
+      <ul class="dropdown-menu form-wrapper">
+        <li>
+          <form id="signup-submit" method="post">
+            <p class="hint-text">Fill in this form to create your account!</p>
+            <div class="form-group">
+              <input id="signup-email" type="text" class="form-control" placeholder="Username" required="required">
+            </div>
+            <div class="form-group">
+              <input id="signup-password" type="password" class="form-control" placeholder="Password"
+                required="required">
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" placeholder="Confirm Password" required="required">
+            </div>
+            <div class="form-group">
+              <label class="checkbox-inline"><input type="checkbox" required="required"> I accept the <a href="#">Terms
+                  &amp;
+                  Conditions</a></label>
+            </div>
+            <input type="submit" class="btn btn-primary btn-block" value="Sign up">
+          </form>
+        </li>
+      </ul>
+
+    </li>
+    <li id="sign-in-btn" class="nav-item" style="float:right">
+      <a data-toggle="dropdown" class="nav-link dropdown-toggle" href="#">Login</a>
+
+      <ul class="dropdown-menu form-wrapper">
+        <li>
+          <form id="login-submit" method="post">
+            <div class="form-group">
+              <input id="email-input" type="text" class="form-control" placeholder="Username" required="required">
+            </div>
+            <div class="form-group">
+              <input id="password-input" type="password" class="form-control" placeholder="Password">
+            </div>
+            <input type="submit" class="btn btn-primary btn-block" value="Login">
+            <div class="form-footer">
+              <a href="#">Forgot Your password?</a>
+            </div>
+          </form>
+        </li>
+      </ul>
+
+    </li>
   </ul>
 </nav>
 <div id="wrapper">
-
-  <div id="sign-in" class="modal">
-
-    <!-- Modal content -->
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <h1>Log in</h1>
-      <br>
-      <form>
-        <input type="text" name="user" placeholder="Username">
-        <input type="password" name="pass" placeholder="Password">
-        <input type="submit" name="login" class="login login-submit" value="Log in">
-      </form>
-    </div>
-
-  </div>
-
   <h1 id="heading">My Reading List</h1>
   <div id="user-input">
     <form id="add-book">
@@ -70,28 +100,13 @@
     <li><a class="footer-link" href="https://github.com/Gnarwall19">GitHub</a></li>
     <li><a class="footer-link" href="https://www.linkedin.com/in/michael-c-wolfe/">linkedIn</a></li>
     <li><a class="footer-link" href="https://gnarwall19.github.io/michael-wolfe-portfolio/">Portfolio</a></li>
+    <li><input id="logout" data-id="{{this}}" type="submit" value="Log Out"></li>
   </ul>
 </footer>
 
 <script>
-  $(function () {
-
-    // When the user clicks on the button, open the modal 
-    $("#sign-in-btn").on('click', function (event) {
-      $('.modal').css('display', 'block');
-      console.log('click');
-    });
-
-
-    $('.close').on('click', function () {
-      $('.modal').css('display', 'none');
-    });
-
-    // Not working
-    window.onclick = function (event) {
-      if (event.target === $('.modal')) {
-        $('.modal').css('display', 'none');
-      }
-    }
+  // Prevent dropdown menu from closing when click inside the form
+  $(document).on("click", ".dropdown-menu", function (e) {
+    e.stopPropagation();
   });
 </script>

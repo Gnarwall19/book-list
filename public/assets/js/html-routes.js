@@ -17,6 +17,8 @@ $(function () {
 
 
 
+
+
   //WORKING
   // Set finished books to completed
   $('.finished-book').on('click', function (event) {
@@ -25,7 +27,7 @@ $(function () {
     var date = new Date().toLocaleDateString('en-US');
 
     $.ajax({
-      type: 'put',
+      type: 'PUT',
       url: '/books/' + id,
       data: {
         completed: true,
@@ -62,4 +64,67 @@ $(function () {
       }
     );
   });
+
+  // Add new user
+  $('#signup-submit').on('submit', function (event) {
+    event.preventDefault();
+    var user = {
+      email: $('#signup-email').val().trim(),
+      password: $('#signup-password').val().trim()
+    }
+    console.log(user);
+
+    $.ajax('/users', {
+      type: 'POST',
+      dataType: 'json',
+      data: user
+    }).done(function (response) {
+      console.log(response);
+      location.reload();
+    }).fail(function (response) {
+      console.log("Oops not working");
+    });
+
+  });
+
+  $('#login-submit').on('submit', function (event) {
+    event.preventDefault();
+    var user = {
+      email: $('#email-input').val().trim(),
+      password: $('#password-input').val().trim()
+    }
+
+
+    console.log(user);
+
+    $.ajax('/users/login', {
+      type: 'POST',
+      dataType: 'json',
+      data: user
+    }).done(function (response) {
+      console.log(response);
+      location.reload();
+
+    }).fail(function (response) {
+      console.log("Oops not working");
+    });
+  });
+
+  // Logout User
+  $('#logout').on('click', function (event) {
+    event.preventDefault();
+
+
+    $.ajax('/users/me/token', {
+      type: 'DELETE'
+
+    }).then(function () {
+      console.log('user logged out.');
+
+      location.reload();
+    });
+  });
+
+  // NEED A LOGOUT BUTTON
+
 });
